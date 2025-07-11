@@ -14,7 +14,7 @@ const placesList = document.querySelector(".places__list");
 
 
 
-initialCards.forEach(function (item, ) {
+initialCards.forEach(function (item) {
   const cards = createCard(item, {
     removeNodeCallback: deleteCard, 
     likeCardCallback: likeCard,
@@ -50,8 +50,7 @@ const profileNameInput = profileForm.elements.name;
 const profileDescriptionInput = profileForm.elements.description;
 
 
-/*const cardTitle = cardElement.querySelector('.card__title');
-const cardDescription = cardElement.querySelector('.card__description');*/
+
 
 
 hangListeners(popupTypeNewCard);
