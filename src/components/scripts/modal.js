@@ -22,7 +22,7 @@ const hangListeners = (element) => {
   const popupCloseButton = element.querySelector(".popup__close");
   popupCloseButton.addEventListener("click", () => {
     closeModal(element);
-});
+  });
 
   element.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup")) {
