@@ -1,11 +1,11 @@
-import "./components/pages/index.css";
-import { initialCards } from "./components/scripts/cards.js";
+import "./pages/index.css";
+import { initialCards } from "./scripts/cards.js";
 import {
   openModal,
   closeModal,
   hangListeners,
-} from "./components/scripts/modal.js";
-import { createCard, deleteCard, likeCard } from "./components/scripts/card.js";
+} from "./scripts/modal.js";
+import { createCard, deleteCard, likeCard } from "./scripts/card.js";
 
 const placesList = document.querySelector(".places__list");
 const profileForm = document.forms["edit-profile"];

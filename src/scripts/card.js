@@ -3,7 +3,7 @@ function deleteCard(cardElement) {
 }
 
 function likeCard(cardLikeButton) {
-  const likeActive = document.querySelector("card__like-button_is-active");
+  const likeActive = cardLikeButton.classList.contains("card__like-button_is-active");
   if (!likeActive) {
     cardLikeButton.classList.toggle("card__like-button_is-active");
   } else {
