@@ -1,44 +1,55 @@
-function deleteCard(cardElement) {
-  cardElement.remove();
-}
-
-function likeCard(cardLikeButton) {
-  const likeActive = cardLikeButton.classList.contains("card__like-button_is-active");
-  if (!likeActive) {
-    cardLikeButton.classList.toggle("card__like-button_is-active");
-  } else {
-    cardLikeButton.classList.toggle("card__like-button_is-active");
-  }
-}
-
-const cardTemplate = document.querySelector("#card-template").content;
-
-function createCard(card, callbacksObject) {
-  const { removeNodeCallback, handleOpenImageCallback, likeCardCallback } =
-    callbacksObject;
+const createCard = ({
+  data,
+  userId,
+  removeNodeCallback,
+  handleOpenImageCallback,
+  likeCardCallback,
+}) => {
+  const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const buttonDelete = cardElement.querySelector(".card__delete-button");
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
+  const counter = cardElement.querySelector(".card__like-counter");
 
-  cardTitle.textContent = card.name;
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
+  cardTitle.textContent = data.name;
 
-  buttonDelete.addEventListener("click", function () {
-    removeNodeCallback(cardElement);
+  cardImage.addEventListener("click", () => {
+    handleOpenImageCallback({ cardName: data.name, cardLink: data.link });
   });
 
-  cardImage.addEventListener("click", function () {
-    handleOpenImageCallback(card);
-  });
+  if (data.likes.length) {
+    counter.classList.add("card__like-counter_is-active");
+    counter.textContent = data.likes.length;
+  }
 
-  cardLikeButton.addEventListener("click", function () {
-    likeCardCallback(cardLikeButton);
+  if (data.owner["_id"] === userId) {
+    buttonDelete.classList.add("card__delete-button_is-active");
+    buttonDelete.addEventListener("click", () => {
+      removeNodeCallback({
+        cardId: data["_id"],
+        cardElement,
+        buttonElement: buttonDelete,
+      });
+    });
+  }
+
+  if (data.likes.find((cardElement) => cardElement["_id"] === userId)) {
+    cardLikeButton.classList.add("card__like-button_is-active");
+  }
+
+  cardLikeButton.addEventListener("click", () => {
+    likeCardCallback({
+      cardId: data["_id"],
+      buttonElement: cardLikeButton,
+      counterElement: counter,
+    });
   });
 
   return cardElement;
-}
+};
 
-export { createCard, deleteCard, likeCard };
+export { createCard };
